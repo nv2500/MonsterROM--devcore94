@@ -114,7 +114,7 @@ TOOLS_DIR="$OUT_DIR/tools"
 
 mkdir -p "$TOOLS_DIR/bin"
 
-ANDROID_TOOLS=true
+ANDROID_TOOLS=false
 APKTOOL=true
 EROFS_UTILS=true
 IMG2SDAT=true

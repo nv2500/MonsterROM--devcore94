@@ -21,6 +21,29 @@ GET_WORK_DIR_HASH()
         sort -z | xargs -0 sha1sum | sha1sum | cut -d " " -f 1
 }
 
+REMOVE_ESIM()
+{
+    if [[ "$TARGET_CODENAME" = "r9s"  ]]; then
+        # remove eSIM
+        LOG "Force remove eSIM on r9s before create final images"
+        BLOBS_LIST+="
+        system/etc/permissions/privapp-permissions-com.samsung.android.app.esimkeystring.xml
+        system/etc/permissions/privapp-permissions-com.samsung.euicc.xml
+        system/etc/permissions/privapp-permissions-com.samsung.euicc.mep.xml
+        system/etc/permissions/privapp-permissions-com.samsung.android.app.telephonyui.esimclient.xml
+        system/etc/sysconfig/preinstalled-packages-com.samsung.android.app.esimkeystring.xml
+        system/etc/sysconfig/preinstalled-packages-com.samsung.euicc.xml
+        system/priv-app/EsimKeyString
+        system/priv-app/EuiccService
+        system/priv-app/EsimClient
+        "
+        for blob in $BLOBS_LIST
+        do
+            rm -rf "$WORK_DIR/system/$blob" &
+        done
+    fi
+}
+
 PREPARE_SCRIPT()
 {
     while [ "$#" != 0 ]; do
@@ -156,6 +179,9 @@ if $BUILD_ROM; then
 fi
 
 if $BUILD_TARGET_FILES || $BUILD_FLASHABLE_ZIP; then
+
+    REMOVE_ESIM
+
     ZIP_FILE_NAME="${TARGET_CODENAME}_"
     if [ "$(GET_PROP "system" "ro.unica.version")" ]; then
         ZIP_FILE_NAME+="$(GET_PROP "system" "ro.unica.version")"
