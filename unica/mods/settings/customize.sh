@@ -1,3 +1,9 @@
+source "$SRC_DIR/scripts/utils/common_utils.sh"
+source "$SRC_DIR/scripts/utils/module_utils.sh"
+source "$SRC_DIR/scripts/utils/smali_utils.sh"
+
+MODPATH="$SRC_DIR/unica/mods/settings"
+
 if [ ! "$(GET_PROP "system" "ro.unica.version")" ]; then
     SET_PROP "system" "ro.unica.version" "$ROM_VERSION"
 fi
@@ -140,31 +146,32 @@ if ! sed -n '/^\.method.*getUnknownAppsDataFromXML(/,/^\.end method/p' "$ASKS_SM
     ASKS_POLICY_METHOD='getPolicyFilePath(IZ)Ljava/lang/String;'
 fi
 
+# LOG "[DEBUG] ASKS_POLICY_METHOD=$ASKS_POLICY_METHOD"
+# SMALI_PATCH "system" "system/framework/services.jar" \
+#     "smali/com/android/server/asks/ASKSManagerService.smali" "replace" \
+#     "$ASKS_POLICY_METHOD" \
+#     'ro.build.official.release' \
+#     'persist.sys.unica.asks'
+# SMALI_PATCH "system" "system/framework/services.jar" \
+#     "smali/com/android/server/asks/ASKSManagerService.smali" "replace" \
+#     "$ASKS_POLICY_METHOD" \
+#     'false' \
+#     'true'
 SMALI_PATCH "system" "system/framework/services.jar" \
     "smali/com/android/server/asks/ASKSManagerService.smali" "replace" \
-    "$ASKS_POLICY_METHOD" \
+    'refreshInstalledUnknownList_NEWInner()V' \
     'ro.build.official.release' \
     'persist.sys.unica.asks'
 SMALI_PATCH "system" "system/framework/services.jar" \
     "smali/com/android/server/asks/ASKSManagerService.smali" "replace" \
-    "$ASKS_POLICY_METHOD" \
+    'refreshInstalledUnknownList_NEWInner()V' \
     'false' \
     'true'
-SMALI_PATCH "system" "system/framework/services.jar" \
-    "smali/com/android/server/asks/ASKSManagerService.smali" "replace" \
-    'refreshInstalledUnknownList_NEW()V' \
-    'ro.build.official.release' \
-    'persist.sys.unica.asks'
-SMALI_PATCH "system" "system/framework/services.jar" \
-    "smali/com/android/server/asks/ASKSManagerService.smali" "replace" \
-    'refreshInstalledUnknownList_NEW()V' \
-    'false' \
-    'true'
-SMALI_PATCH "system" "system/framework/services.jar" \
-    "smali/com/android/server/asks/ASKSManagerService.smali" "replace" \
-    'verifyASKStokenForPackage(Ljava/lang/String;Ljava/lang/String;J[Landroid/content/pm/Signature;Ljava/lang/String;Ljava/lang/String;Z)I' \
-    'ro.build.official.release' \
-    'persist.sys.unica.asks'
+# SMALI_PATCH "system" "system/framework/services.jar" \
+#     "smali/com/android/server/asks/ASKSManagerService.smali" "replace" \
+#     'verifyASKStokenForPackage(Ljava/lang/String;Ljava/lang/String;J[Landroid/content/pm/Signature;Ljava/lang/String;Ljava/lang/String;Z)I' \
+#     'ro.build.official.release' \
+#     'persist.sys.unica.asks'
 SMALI_PATCH "system" "system/framework/services.jar" \
     "smali/com/android/server/asks/ASKSManagerService.smali" "replace" \
     'verifyASKStokenForPackage(Ljava/lang/String;Ljava/lang/String;J[Landroid/content/pm/Signature;Ljava/lang/String;Ljava/lang/String;Z)I' \
