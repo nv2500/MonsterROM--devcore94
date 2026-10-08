@@ -1,3 +1,8 @@
+source "$SRC_DIR/scripts/utils/common_utils.sh"
+source "$SRC_DIR/scripts/utils/module_utils.sh"
+source "$SRC_DIR/scripts/utils/smali_utils.sh"
+
+
 # UN1CA floating_feature patch
 # - Add deprecated features in the $DEPRECATED variable
 # - Add features to ignore in the $BLACKLIST variable

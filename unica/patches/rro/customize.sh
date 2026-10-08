@@ -1,3 +1,7 @@
+source "$SRC_DIR/scripts/utils/common_utils.sh"
+source "$SRC_DIR/scripts/utils/module_utils.sh"
+source "$SRC_DIR/scripts/utils/smali_utils.sh"
+
 SOURCE_PRODUCT_NAME="$(GET_PROP "system" "ro.product.system.name")"
 TARGET_PRODUCT_NAME="$(GET_PROP "vendor" "ro.product.vendor.name")"
 

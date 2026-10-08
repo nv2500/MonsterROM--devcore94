@@ -1,3 +1,7 @@
+source "$SRC_DIR/scripts/utils/common_utils.sh"
+source "$SRC_DIR/scripts/utils/module_utils.sh"
+source "$SRC_DIR/scripts/utils/smali_utils.sh"
+
 # [
 _LOG() { if $DEBUG; then LOGW "$1"; else ABORT "$1"; fi }
 
@@ -105,18 +109,18 @@ if [ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_GRAPHICS_SUPPORT_3D_SU
 fi
 LOG_STEP_OUT
 
-# Samsung Camera "hal3_mass-phone-release" app flavor
-if ! $SOURCE_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
-    if $TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
-        ADD_TO_WORK_DIR "r9qxxx" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk" 0 0 644 "u:object_r:system_file:s0"
-        ADD_TO_WORK_DIR "r9qxxx" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk.prof" 0 0 644 "u:object_r:system_file:s0"
-    fi
-else
-    if ! $TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
-        # TODO handle this condition
-        LOG_MISSING_PATCHES "SOURCE_CAMERA_SUPPORT_MASS_APP_FLAVOR" "TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR"
-    fi
-fi
+# # Samsung Camera "hal3_mass-phone-release" app flavor
+# if ! $SOURCE_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
+#     if $TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
+#         ADD_TO_WORK_DIR "r9qxxx" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk" 0 0 644 "u:object_r:system_file:s0"
+#         ADD_TO_WORK_DIR "r9qxxx" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk.prof" 0 0 644 "u:object_r:system_file:s0"
+#     fi
+# else
+#     if ! $TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
+#         # TODO handle this condition
+#         LOG_MISSING_PATCHES "SOURCE_CAMERA_SUPPORT_MASS_APP_FLAVOR" "TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR"
+#     fi
+# fi
 
 # Add/delete Snapchat CameraKit Plugin if SHOOTING_MODE_FUN is (not) available
 if [ -f "$WORK_DIR/system/system/app/FunModeSDK/FunModeSDK.apk" ]; then
@@ -522,6 +526,37 @@ if [ ! "$(find "$WORK_DIR/product/overlay" -maxdepth 1 -type f -name "SystemUI*"
         EVAL "sed -i \"s/config_enableDisplayCutoutProtection\\\">$SOURCE_CAMERA_SUPPORT_CUTOUT_PROTECTION/config_enableDisplayCutoutProtection\\\">$TARGET_CAMERA_SUPPORT_CUTOUT_PROTECTION/\" \"$APKTOOL_DIR/system_ext/priv-app/SystemUI/SystemUI.apk/res/values/bools.xml\""
     fi
 fi
+
+# Patch libvpl unload path for One UI 8.5 camera stability
+PATCH_LIBVPL_UNLOAD()
+{
+    local FILE="$1"
+    local FROM="$2"
+    local TO="$3"
+
+    if [ ! -f "$FILE" ]; then
+        LOGW "File not found: ${FILE//$WORK_DIR/}"
+        return 0
+    fi
+
+    if xxd -p -c 0 "$FILE" | grep -q "$TO"; then
+        LOG "- libvpl unload already patched in ${FILE//$WORK_DIR/}"
+    elif xxd -p -c 0 "$FILE" | grep -q "$FROM"; then
+        HEX_PATCH "$FILE" "$FROM" "$TO"
+    else
+        _LOG "No known libvpl unload patch available for ${FILE//$WORK_DIR/}"
+    fi
+}
+
+LOG_STEP_IN "- Patching libvpl unload"
+PATCH_LIBVPL_UNLOAD "$WORK_DIR/vendor/lib/libvpl.so" \
+    "b0b524490420244a79447a4424f016ee224c01207c44d4e8" \
+    "704700bf0420244a79447a4424f016ee224c01207c44d4e8"
+PATCH_LIBVPL_UNLOAD "$WORK_DIR/vendor/lib64/libvpl.so" \
+    "fd7bbca9f70b00f9f65702a9f44f03a9fd03009141fefff0" \
+    "c0035fd6f70b00f9f65702a9f44f03a9fd03009141fefff0"
+LOG_STEP_OUT
+unset -f PATCH_LIBVPL_UNLOAD
 
 unset SOURCE_FIRMWARE_PATH TARGET_FIRMWARE_PATH \
     SOURCE_CAMERA_CONFIG_ACTION_CLASSIFIER TARGET_CAMERA_CONFIG_ACTION_CLASSIFIER \
