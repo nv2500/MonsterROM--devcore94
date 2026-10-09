@@ -66,6 +66,7 @@ cat <<'EOF' >> "$SEPOLICY"
 (allow prophide init (process (noatsecure rlimitinh siginh)))
 ; block access
 (allow prophide block_device (blk_file (read open getattr ioctl)))
+(allow prophide emmcblk_device (blk_file (read open getattr ioctl)))
 ; allow calling init_exec by escalating when needed
 (allow init prophide_exec (file (read open execute getattr map)))
 (allow prophide init_exec (file (read open execute getattr map)))

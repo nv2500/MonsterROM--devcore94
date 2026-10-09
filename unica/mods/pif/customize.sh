@@ -1,3 +1,9 @@
+source "$SRC_DIR/scripts/utils/common_utils.sh"
+source "$SRC_DIR/scripts/utils/module_utils.sh"
+source "$SRC_DIR/scripts/utils/smali_utils.sh"
+
+MODPATH="$SRC_DIR/unica/mods/pif"
+
 APPLY_PATCH "system" "system/framework/framework.jar" \
     "$MODPATH/framework.jar/0001-Introduce-PlayIntegrityHooks.patch"
 SMALI_PATCH "system" "system/framework/framework.jar" \

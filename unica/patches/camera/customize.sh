@@ -2,6 +2,11 @@ source "$SRC_DIR/scripts/utils/common_utils.sh"
 source "$SRC_DIR/scripts/utils/module_utils.sh"
 source "$SRC_DIR/scripts/utils/smali_utils.sh"
 
+MODPATH="$SRC_DIR/unica/patches/camera"
+
+# ADD_TO_WORK_DIR "$MODPATH" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk" 0 0 644 "u:object_r:system_file:s0"
+
+
 # # [
 # _LOG() { if $DEBUG; then LOGW "$1"; else ABORT "$1"; fi }
 

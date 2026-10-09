@@ -3,7 +3,7 @@ source "$SRC_DIR/scripts/utils/module_utils.sh"
 
 MODPATH="$SRC_DIR/unica/patches/dvfs"
 
-ADD_TO_WORK_DIR "dm3q" "system" "system/priv-app/SamsungDeviceHealthManagerService/SamsungDeviceHealthManagerService.apk" 0 0 644 "u:object_r:system_file:s0"
+# ADD_TO_WORK_DIR "dm3q" "system" "system/priv-app/SamsungDeviceHealthManagerService/SamsungDeviceHealthManagerService.apk" 0 0 644 "u:object_r:system_file:s0"
 
 if [[ "$SOURCE_DVFSAPP_CONFIG_DVFS_POLICY_FILENAME" == "$TARGET_DVFSAPP_CONFIG_DVFS_POLICY_FILENAME" ]] && \
     [[ "$SOURCE_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME" == "$TARGET_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME" ]]; then
@@ -32,13 +32,13 @@ if [[ "$SOURCE_DVFSAPP_CONFIG_DVFS_POLICY_FILENAME" != "$TARGET_DVFSAPP_CONFIG_D
 
     # com/sec/android/sdhms/performance/PerformanceFeature
     SMALI_PATCH "system" "system/priv-app/SamsungDeviceHealthManagerService/SamsungDeviceHealthManagerService.apk" \
-        "smali/r1/c.smali" "replace" \
+        "smali/c4/c.smali" "replace" \
         "<clinit>()V" \
         "$SOURCE_DVFSAPP_CONFIG_DVFS_POLICY_FILENAME" \
         "$TARGET_DVFSAPP_CONFIG_DVFS_POLICY_FILENAME"
     # com/sec/android/sdhms/performance/settings/PerformanceProperties
     SMALI_PATCH "system" "system/priv-app/SamsungDeviceHealthManagerService/SamsungDeviceHealthManagerService.apk" \
-        "smali/z1/e.smali" "replace" \
+        "smali/k4/e.smali" "replace" \
         "<init>(Landroid/content/Context;)V" \
         "$SOURCE_DVFSAPP_CONFIG_DVFS_POLICY_FILENAME" \
         "$TARGET_DVFSAPP_CONFIG_DVFS_POLICY_FILENAME"
@@ -48,11 +48,11 @@ fi
 if [[ "$SOURCE_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME" != "$TARGET_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME" ]]; then
     SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_SYSTEM_CONFIG_SIOP_POLICY_FILENAME" "$TARGET_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME"
 
-    SMALI_PATCH "system" "system/framework/ssrm.jar" \
-        "smali/com/android/server/ssrm/Feature.smali" "replace" \
-        "<clinit>()V" \
-        "$SOURCE_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME" \
-        "$TARGET_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME"
+    # SMALI_PATCH "system" "system/framework/ssrm.jar" \
+    #     "smali/com/android/server/ssrm/Feature.smali" "replace" \
+    #     "<clinit>()V" \
+    #     "$SOURCE_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME" \
+    #     "$TARGET_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME"
 
     DECODE_APK "system" "system/priv-app/SamsungDeviceHealthManagerService/SamsungDeviceHealthManagerService.apk"
 
@@ -72,9 +72,9 @@ if [[ "$SOURCE_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME" != "$TARGET_DVFSAPP_CONFIG_S
 
     # com/sec/android/sdhms/util/Feature
     SMALI_PATCH "system" "system/priv-app/SamsungDeviceHealthManagerService/SamsungDeviceHealthManagerService.apk" \
-        "smali/U1/w.smali" "replace" \
+        "smali/n5/i0.smali" "replace" \
         "<clinit>()V" \
-        "siop_dm3q_sm8550" \
+        "$SOURCE_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME" \
         "$TARGET_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME"
 fi
 

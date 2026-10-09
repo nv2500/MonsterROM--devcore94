@@ -1,8 +1,16 @@
+source "$SRC_DIR/scripts/utils/common_utils.sh"
+source "$SRC_DIR/scripts/utils/module_utils.sh"
+source "$SRC_DIR/scripts/utils/smali_utils.sh"
+
+
 DAAGENT_APK_DIR="$APKTOOL_DIR/system/app/DAAgent/DAAgent.apk"
 DAAGENT_PROVIDER_SMALI="$DAAGENT_APK_DIR/smali/com/samsung/android/da/daagent/provider/DualAppProvider.smali"
 DAAGENT_UTILITY_SMALI="$DAAGENT_APK_DIR/smali/com/samsung/android/da/daagent/utils/DAUtility.smali"
 DAAGENT_WHITELIST_SMALI="$DAAGENT_APK_DIR/smali/com/samsung/android/da/daagent/provider/WhiteListApps.smali"
 DAAGENT_MANIFEST="$DAAGENT_APK_DIR/AndroidManifest.xml"
+
+
+MODPATH="$SRC_DIR/unica/mods/daagent"
 
 DECODE_APK "system" "system/app/DAAgent/DAAgent.apk"
 
