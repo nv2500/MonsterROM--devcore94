@@ -110,7 +110,12 @@ if [ "$#" != "1" ]; then
     exit 1
 fi
 
-OUTPUT_FILE="$1"
+IMAGES_ONLY=false
+if [[ "$1" == "--images-only" ]]; then
+    IMAGES_ONLY=true
+else
+    OUTPUT_FILE="$1"
+fi
 
 [ -d "$TMP_DIR" ] && rm -rf "$TMP_DIR"
 mkdir -p "$TMP_DIR"
@@ -152,6 +157,12 @@ if [ -d "$WORK_DIR/kernel" ]; then
         fi
         LOG_STEP_OUT
     done
+fi
+
+if $IMAGES_ONLY; then
+    mkdir -p "$OUT_DIR"
+    find "$TMP_DIR" -maxdepth 1 -type f -name "*.img" -exec cp -a {} "$OUT_DIR/" \; || exit 1
+    exit 0
 fi
 
 LOG "- Generating build_info.txt"
