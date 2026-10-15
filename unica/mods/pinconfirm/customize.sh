@@ -1,3 +1,8 @@
+source "$SRC_DIR/scripts/utils/common_utils.sh"
+source "$SRC_DIR/scripts/utils/module_utils.sh"
+source "$SRC_DIR/scripts/utils/smali_utils.sh"
+
+
 SMALI_PATCH "system" "system/framework/services.jar" \
     "smali_classes2/com/android/server/locksettings/LockSettingsService.smali" "replace" \
     'refreshStoredPinLength(I)Z' \

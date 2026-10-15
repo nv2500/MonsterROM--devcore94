@@ -4,8 +4,8 @@ source "$SRC_DIR/scripts/utils/smali_utils.sh"
 
 MODPATH="$SRC_DIR/unica/patches/camera"
 
-DELETE_FROM_WORK_DIR "system" "system/priv-app/SamsungCamera"
-ADD_TO_WORK_DIR "$MODPATH" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk" 0 0 644 "u:object_r:system_file:s0"
+#DELETE_FROM_WORK_DIR "system" "system/priv-app/SamsungCamera"
+#ADD_TO_WORK_DIR "$MODPATH" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk" 0 0 644 "u:object_r:system_file:s0"
 
 
 # # [

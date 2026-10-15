@@ -1,25 +1,26 @@
 LOG_STEP_IN "- Adding stock SoundBooster libs"
-if [[ "$TARGET_CODENAME" == "r9s" ]]; then
+if [[ "$TARGET_CODENAME" == "r9s"  ]]; then
     ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib/lib_SoundBooster_ver1070.so" 0 0 644 "u:object_r:system_lib_file:s0"
 else
     ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib/lib_SoundBooster_ver1050.so" 0 0 644 "u:object_r:system_lib_file:s0"
 fi
-if [ -f "$FW_DIR/$_TARGET_FIRMWARE_PATH/system/system/lib64/lib_SAG_EQ_ver2090.so" ]; then
-    ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib64/lib_SAG_EQ_ver2090.so" 0 0 644 "u:object_r:system_lib_file:s0"
-elif [[ "$TARGET_CODENAME" == "r9s" ]]; then
+DELETE_FROM_WORK_DIR "system" "system/lib/lib_SoundBooster_ver2000.so"
+DELETE_FROM_WORK_DIR "system" "system/lib/lib_SAG_EQ_ver2000.so"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib/lib_SoundAlive_play_plus_ver500.so" 0 0 644 "u:object_r:system_lib_file:s0"
+DELETE_FROM_WORK_DIR "system" "system/lib/lib_SoundAlive_play_plus_ver800.so"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib/libaudiosaplus_sec_legacy.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib/libsamsungSoundbooster_plus_legacy.so" 0 0 644 "u:object_r:system_lib_file:s0"
+if [[ "$TARGET_CODENAME" == "r9s"  ]]; then
     ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib64/lib_SoundBooster_ver1070.so" 0 0 644 "u:object_r:system_lib_file:s0"
 else
     ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib64/lib_SoundBooster_ver1050.so" 0 0 644 "u:object_r:system_lib_file:s0"
 fi
-DELETE_FROM_WORK_DIR "system" "system/lib64/lib_SoundBooster_ver2090.so"
+DELETE_FROM_WORK_DIR "system" "system/lib64/lib_SoundBooster_ver2080.so"
+DELETE_FROM_WORK_DIR "system" "system/lib64/lib_SAG_EQ_ver2080.so"
 ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib64/lib_SoundAlive_play_plus_ver500.so" 0 0 644 "u:object_r:system_lib_file:s0"
 DELETE_FROM_WORK_DIR "system" "system/lib64/lib_SoundAlive_play_plus_ver900.so"
 ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib64/libaudiosaplus_sec_legacy.so" 0 0 644 "u:object_r:system_lib_file:s0"
 ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib64/libsamsungSoundbooster_plus_legacy.so" 0 0 644 "u:object_r:system_lib_file:s0"
-if grep -q 'stream type="sec_voice_communication"' "$WORK_DIR/vendor/etc/audio_effects_sec.xml" 2>/dev/null; then
-    LOG "- Removing unsupported sec_voice_communication audio effect stream"
-    sed -i '/<stream type="sec_voice_communication">/,/<\/stream>/d' "$WORK_DIR/vendor/etc/audio_effects_sec.xml"
-fi
 LOG_STEP_OUT
 
 LOG_STEP_IN "- Adding OK Google Hotword Enrollment blobs"

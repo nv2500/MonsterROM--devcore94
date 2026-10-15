@@ -159,9 +159,10 @@ if [ -d "$WORK_DIR/kernel" ]; then
     done
 fi
 
+mkdir -p "$OUT_DIR"
+find "$TMP_DIR" -maxdepth 1 -type f -name "*.img" -exec cp -a {} "$OUT_DIR/" \; || exit 1
+
 if $IMAGES_ONLY; then
-    mkdir -p "$OUT_DIR"
-    find "$TMP_DIR" -maxdepth 1 -type f -name "*.img" -exec cp -a {} "$OUT_DIR/" \; || exit 1
     exit 0
 fi
 
