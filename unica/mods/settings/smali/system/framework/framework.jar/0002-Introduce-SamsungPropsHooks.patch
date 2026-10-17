@@ -221,7 +221,7 @@ index 00000000..45c67f38
 +
 +    const-string p0, "SM-A526B"
 +
-+    invoke-static {v4, p0}, Lio/mesalabs/unica/SamsungPropsHooks;->setBuildField(Ljava/lang/String;Ljava/lang/Object;)V
++    invoke-static {v4, p0}, Lio/mesalabs/unica/SamsungPropsHooks;->setVersionField(Ljava/lang/String;Ljava/lang/Object;)V
 +
 +    goto/16 :goto_3
 +
