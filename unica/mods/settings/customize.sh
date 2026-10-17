@@ -44,10 +44,10 @@ SMALI_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" \
     'ro.product.model' \
     'ro.boot.em.model'
 
-# # Add backend hooks for Settings toggles that live outside SecSettings.
-# DECODE_APK "system" "system/framework/framework.jar"
-# EVAL "mkdir -p \"$APKTOOL_DIR/system/framework/framework.jar/smali_classes6/io/mesalabs/unica\""
-# EVAL "cp -f \"$MODPATH/framework.jar/FloatingFeatureHooks.smali\" \"$APKTOOL_DIR/system/framework/framework.jar/smali_classes6/io/mesalabs/unica/FloatingFeatureHooks.smali\""
+# Add backend hooks for Settings toggles that live outside SecSettings.
+DECODE_APK "system" "system/framework/framework.jar"
+EVAL "mkdir -p \"$APKTOOL_DIR/system/framework/framework.jar/smali_classes6/io/mesalabs/unica\""
+EVAL "cp -f \"$MODPATH/framework.jar/FloatingFeatureHooks.smali\" \"$APKTOOL_DIR/system/framework/framework.jar/smali_classes6/io/mesalabs/unica/FloatingFeatureHooks.smali\""
 
 # SMALI_PATCH "system" "system/framework/framework.jar" \
 #     "smali_classes6/com/samsung/android/feature/SemFloatingFeature.smali" "replace" \
