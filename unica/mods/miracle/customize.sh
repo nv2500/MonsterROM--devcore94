@@ -1,3 +1,9 @@
+source "$SRC_DIR/scripts/utils/common_utils.sh"
+source "$SRC_DIR/scripts/utils/module_utils.sh"
+source "$SRC_DIR/scripts/utils/smali_utils.sh"
+
+MODPATH="$SRC_DIR/unica/mods/miracle"
+
 if [ ! "$(GET_PROP "system" "ro.unica.codename")" ]; then
     # Match latest Samsung's flagship device codename
     ROM_CODENAME="$(basename "$MODPATH")"
