@@ -7,7 +7,9 @@ SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_SETTINGS_ENABLE_EU_BATTERY_REG
 
 # 2500 ROM version
 SET_PROP "system" "ro.artisanrom.version" "$ROM_VERSION"
+SET_PROP "system" "ro.unica.version" "$ROM_VERSION"
 SET_PROP "system" "ro.artisanrom.target" "$TARGET_CODENAME"
+SET_PROP "system" "ro.unica.codename" "$TARGET_CODENAME"
 SET_PROP "system" "ro.artisanrom.official" "$ROM_IS_OFFICIAL"
 
 SMALI_PATCH "system" "system/framework/framework.jar" \
