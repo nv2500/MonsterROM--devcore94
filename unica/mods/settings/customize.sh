@@ -5,6 +5,11 @@ if [ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_BATTERY_SUPPORT_BSOH_S
 fi
 SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_SETTINGS_ENABLE_EU_BATTERY_REGULATORY" "TRUE"
 
+# 2500 ROM version
+SET_PROP "system" "ro.artisanrom.version" "$ROM_VERSION"
+SET_PROP "system" "ro.artisanrom.target" "$TARGET_CODENAME"
+SET_PROP "system" "ro.artisanrom.official" "$ROM_IS_OFFICIAL"
+
 SMALI_PATCH "system" "system/framework/framework.jar" \
     "smali/android/app/Instrumentation.smali" "replace" \
     'newApplication(Ljava/lang/Class;Landroid/content/Context;)Landroid/app/Application;' \
