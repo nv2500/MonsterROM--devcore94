@@ -1,3 +1,7 @@
+source "$SRC_DIR/scripts/utils/common_utils.sh"
+source "$SRC_DIR/scripts/utils/module_utils.sh"
+source "$SRC_DIR/scripts/utils/smali_utils.sh"
+
 OUTDOOR_SMALI_DIR="smali_classes4"
 if [ "$SOURCE_PLATFORM_SDK_VERSION" = "37" ]; then
     OUTDOOR_SMALI_DIR="smali_classes3"

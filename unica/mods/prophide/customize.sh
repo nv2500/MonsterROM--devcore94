@@ -77,17 +77,17 @@ cat <<'EOF' >> "$SEPOLICY"
 (allow prophide prophide_exec (file (entrypoint read open execute getattr map)))
 EOF
 
-if grep -q "^(type emmcblk_device)" "$WORK_DIR/vendor/etc/selinux/vendor_sepolicy.cil"; then
-cat <<'EOF' >> "$SEPOLICY"
-(allow prophide emmcblk_device (blk_file (read open getattr ioctl)))
-EOF
-fi
-if grep -q "^(type vbmeta_block_device)" "$WORK_DIR/vendor/etc/selinux/vendor_sepolicy.cil"; then
-cat <<'EOF' >> "$SEPOLICY"
-(allow prophide vbmeta_block_device (blk_file (read open getattr ioctl)))
-(allow prophide vbmeta_block_device (lnk_file (read open getattr)))
-EOF
-fi
+#if grep -q "^(type emmcblk_device)" "$WORK_DIR/vendor/etc/selinux/vendor_sepolicy.cil"; then
+#cat <<'EOF' >> "$SEPOLICY"
+#(allow prophide emmcblk_device (blk_file (read open getattr ioctl)))
+#EOF
+#fi
+#if grep -q "^(type vbmeta_block_device)" "$WORK_DIR/vendor/etc/selinux/vendor_sepolicy.cil"; then
+#cat <<'EOF' >> "$SEPOLICY"
+#(allow prophide vbmeta_block_device (blk_file (read open getattr ioctl)))
+#(allow prophide vbmeta_block_device (lnk_file (read open getattr)))
+#EOF
+#fi
 
 unset VBIMG AVBINFO AVBSIZE PK_OFFSET PK_SIZE SEPOLICY
 unset -f PUB_KEY_ADDR_EXTRACT
