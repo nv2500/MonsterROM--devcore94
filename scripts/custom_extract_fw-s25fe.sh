@@ -29,7 +29,7 @@ EXTRACT_OS_PARTITIONS()
 {
     # LOG "- Unpacking at TMP_DIR=$TMP_DIR, TMP_DIR=$FW_DIR"
     # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#131
-    # local FILES="system.img vendor.img product.img system_ext.img odm.img vendor_dlkm.img odm_dlkm.img system_dlkm.img optics.img prism.img"
+    local FILES="system.img vendor.img product.img system_ext.img odm.img vendor_dlkm.img odm_dlkm.img system_dlkm.img optics.img prism.img"
     # local FILES="optics.img prism.img"
     # local FILES="optics.img"
 
