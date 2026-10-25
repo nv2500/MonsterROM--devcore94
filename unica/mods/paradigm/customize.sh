@@ -151,6 +151,10 @@ else
 
 fi
 
+LOG "- Forcing Now Nudge availability in SecSettings.apk"
+APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" \
+    "$MODPATH/now-nudge/SecSettings.apk/0001-Force-Now-Nudge-Galaxy-AI-availability.patch"
+
 if [ "$SOURCE_PLATFORM_SDK_VERSION" = "37" ]; then
     ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/etc/default-permissions/default-permissions-com.samsung.mediasearch.xml" 0 0 644 "u:object_r:system_file:s0"
     ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/etc/permissions/privapp-permissions-com.samsung.mediasearch.xml" 0 0 644 "u:object_r:system_file:s0"
