@@ -271,7 +271,7 @@ index e80f9e2..24361af 100644
 
      move-object v0, p0
 @@ -12466,6 +12641,27 @@
-     goto/16 :goto_4
+     goto/16 :goto_1
 
      :cond_0
 +    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
@@ -292,7 +292,7 @@ index e80f9e2..24361af 100644
 +
 +    if-eqz v0, :unica_hma_get_app_info_continue
 +
-+    goto/16 :goto_4
++    goto/16 :goto_1
 +
 +    :unica_hma_get_app_info_continue
      invoke-virtual {p0, p2, p3, p4}, Lcom/android/server/pm/ComputerEngine;->updateFlagsForPackage(IJ)J

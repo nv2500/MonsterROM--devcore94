@@ -20,7 +20,7 @@
 source "$SRC_DIR/scripts/utils/firmware_utils.sh" || exit 1
 
 FIRMWARES=()
-MODEL="SM-S731B"
+MODEL="SM-S741B"
 CSC="EUX"
 
 TMP_DIR="$(mktemp -d)"

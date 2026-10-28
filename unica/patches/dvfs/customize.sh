@@ -13,6 +13,37 @@ fi
 
 _LOG() { if $DEBUG; then LOGW "$1"; else ABORT "$1"; fi }
 
+_PATCH_SSRM_POLICY_FILENAME() {
+    local APK_DIR="$APKTOOL_DIR/system/priv-app/SamsungDeviceHealthManagerService/SamsungDeviceHealthManagerService.apk"
+    local CANDIDATE
+    local -a MATCHES=()
+
+    while IFS= read -r -d '' CANDIDATE; do
+        if awk -v VALUE="$SOURCE_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME" '
+            /^\.method/ { IN_CLINIT = index($0, "<clinit>()V") > 0 }
+            IN_CLINIT && index($0, "\"" VALUE "\"") { FOUND = 1 }
+            /^\.end method/ { IN_CLINIT = 0 }
+            END { exit !FOUND }
+        ' "$CANDIDATE"; then
+            MATCHES+=("${CANDIDATE#"$APK_DIR"/}")
+        fi
+    done < <(find "$APK_DIR" -type f -name "*.smali" -print0)
+
+    if [[ "${#MATCHES[@]}" -ne 1 ]]; then
+        LOGE "Expected one SDHMS <clinit>()V reference to \"$SOURCE_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME\", found ${#MATCHES[@]}"
+        for CANDIDATE in "${MATCHES[@]}"; do
+            LOGE "  $CANDIDATE"
+        done
+        return 1
+    fi
+
+    SMALI_PATCH "system" "system/priv-app/SamsungDeviceHealthManagerService/SamsungDeviceHealthManagerService.apk" \
+        "${MATCHES[0]}" "replace" \
+        "<clinit>()V" \
+        "$SOURCE_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME" \
+        "$TARGET_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME"
+}
+
 # SEC_PRODUCT_FEATURE_DVFSAPP_CONFIG_DVFS_POLICY_FILENAME
 if [[ "$SOURCE_DVFSAPP_CONFIG_DVFS_POLICY_FILENAME" != "$TARGET_DVFSAPP_CONFIG_DVFS_POLICY_FILENAME" ]]; then
     SMALI_PATCH "system" "system/framework/ssrm.jar" \
@@ -71,11 +102,7 @@ if [[ "$SOURCE_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME" != "$TARGET_DVFSAPP_CONFIG_S
     fi
 
     # com/sec/android/sdhms/util/Feature
-    SMALI_PATCH "system" "system/priv-app/SamsungDeviceHealthManagerService/SamsungDeviceHealthManagerService.apk" \
-        "smali/n5/i0.smali" "replace" \
-        "<clinit>()V" \
-        "$SOURCE_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME" \
-        "$TARGET_DVFSAPP_CONFIG_SSRM_POLICY_FILENAME"
+    _PATCH_SSRM_POLICY_FILENAME || return 1
 fi
 
 if [ -f "$SRC_DIR/target/$TARGET_CODENAME/dvfs/siop_model.xml" ]; then
@@ -102,3 +129,4 @@ else
 fi
 
 unset -f _LOG
+unset -f _PATCH_SSRM_POLICY_FILENAME
