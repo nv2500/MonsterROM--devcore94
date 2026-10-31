@@ -3,7 +3,7 @@
 
 # Only the below variable(s) need to be changed!
 VERSION_MAJOR=4
-VERSION_MINOR=1
+VERSION_MINOR=2
 VERSION_PATCH=6
 
 # The below variables will be generated automatically
