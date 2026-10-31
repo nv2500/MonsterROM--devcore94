@@ -28,6 +28,20 @@ SMALI_PATCH "system" "system/framework/framework.jar" \
 DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
 SECSETTINGS_APK="$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk"
 
+# Keep the ANGLE developer option enabled even when its debug property is unset.
+ANGLE_CONTROLLER="$(find "$SECSETTINGS_APK" -type f \
+    -path '*/GraphicsDriverEnableAngleAsSystemDriverController.smali' -print -quit)"
+[ "$ANGLE_CONTROLLER" ] || ABORT "ANGLE developer-option controller not found"
+ANGLE_CONTROLLER="${ANGLE_CONTROLLER//$SECSETTINGS_APK\//}"
+if ! grep -q -F 'isAngleDeveloperOptionEnabled()Z' "$SECSETTINGS_APK/$ANGLE_CONTROLLER"; then
+    LOG "ANGLE developer-option enablement check not found"
+fi
+SMALI_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" \
+    "$ANGLE_CONTROLLER" "return" \
+    'isAngleDeveloperOptionEnabled()Z' \
+    'true' \
+    > /dev/null
+
 # Disable stock OTA references
 if [ ! -f "$WORK_DIR/system/system/priv-app/ChoiDujour/ChoiDujour.apk" ]; then
     SOFTWARE_UPDATE_UTILS="$(find "$SECSETTINGS_APK" \
