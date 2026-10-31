@@ -65,3 +65,12 @@ if [ -f "$WORK_DIR/system/system/priv-app/SecSoundPicker/SecSoundPicker.apk" ]; 
         "$MODPATH/brandsound/SecSoundPicker.apk/0001-Enable-SUPPORT_SAMSUNG_BRAND_SOUND_ONEUI_7.patch"
 fi
 
+# some tweaking from s26fe
+SET_PROP "vendor" "ro.egl.blobcache.multifile" "true"
+SET_PROP "vendor" "ro.egl.blobcache.multifile_limit" "536870912"
+SET_PROP "vendor" "ro.hardware.vulkan.deqp.level" "132645633"
+SET_PROP "vendor" "debug.sf.enable_adpf_cpu_hint" "false"
+SET_PROP "vendor" "ro.surface_flinger.set_display_power_timer_ms" "200"
+SET_PROP "vendor" "security.ASKS.delta_policy_version" "00000000"
+SET_PROP "vendor" "security.ASKS.policy_version" "00000000"
+SET_PROP "vendor" "ro.slmk.dha_empty_max" "30"
