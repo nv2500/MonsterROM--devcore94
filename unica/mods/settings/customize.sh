@@ -28,17 +28,17 @@ SMALI_PATCH "system" "system/framework/framework.jar" \
 DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
 SECSETTINGS_APK="$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk"
 
-# Keep the ANGLE developer option enabled even when its debug property is unset.
+# Keep the ANGLE developer option available on vendor API levels that hide it.
 ANGLE_CONTROLLER="$(find "$SECSETTINGS_APK" -type f \
     -path '*/GraphicsDriverEnableAngleAsSystemDriverController.smali' -print -quit)"
 [ "$ANGLE_CONTROLLER" ] || ABORT "ANGLE developer-option controller not found"
 ANGLE_CONTROLLER="${ANGLE_CONTROLLER//$SECSETTINGS_APK\//}"
-if ! grep -q -F 'isAngleDeveloperOptionEnabled()Z' "$SECSETTINGS_APK/$ANGLE_CONTROLLER"; then
-    LOG "ANGLE developer-option enablement check not found"
+if ! grep -q -F '.method public final isAvailable()Z' "$SECSETTINGS_APK/$ANGLE_CONTROLLER"; then
+    ABORT "ANGLE developer-option availability method not found"
 fi
 SMALI_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" \
     "$ANGLE_CONTROLLER" "return" \
-    'isAngleDeveloperOptionEnabled()Z' \
+    'isAvailable()Z' \
     'true' \
     > /dev/null
 
