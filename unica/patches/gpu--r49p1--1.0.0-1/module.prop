@@ -1,0 +1,7 @@
+id=exynos_valhall_gpudriver
+name=Exynos Valhall GPU Driver [r49p1] (Exynos 2100)
+version=v1.0.0-1-cc2da1b
+versionCode=1
+author=Flopster101
+description=Updated Mali GPU driver (r49p1, 32-bit and 64-bit) for the Exynos 2100 (Mali-G78).
+driverVersion=r49p1

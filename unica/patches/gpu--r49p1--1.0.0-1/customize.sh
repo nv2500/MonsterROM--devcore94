@@ -4,17 +4,13 @@ SKIPUNZIP=1
 source "$SRC_DIR/scripts/utils/common_utils.sh" || return 1
 source "$SRC_DIR/scripts/utils/module_utils.sh" || return 1
 
-MODPATH="$SRC_DIR/unica/patches/Exynos_Valhall_GPUDriver-r54p1-5a472e7-v1.0.0-2"
-DRIVER_VER="r54p1"
+MODPATH="$SRC_DIR/unica/patches/gpu--r49p1--1.0.0-1"
+DRIVER_VER="r49p1 (32-bit and 64-bit)"
 
 case "$TARGET_PLATFORM" in
     exynos2100|exynos2100_r)
         SOC_NAME="Exynos 2100"
         SOC_NUM="2100"
-        ;;
-    exynos1280|s5e8825|erd8825)
-        SOC_NAME="Exynos 1280"
-        SOC_NUM="1280"
         ;;
     *)
         LOG "- Skipping $DRIVER_VER GPU driver for unsupported platform: $TARGET_PLATFORM"
@@ -33,8 +29,6 @@ fi
 HAS_VENDOR_LIB=false
 [ -d "$WORK_DIR/vendor/lib" ] && HAS_VENDOR_LIB=true
 
-# Stage each file to the real vendor partition. Keep stock HAL support
-# libraries when the target firmware already provides them.
 while IFS= read -r -d '' source_file; do
     relative_file="${source_file#"$DRIVER_PAYLOAD"/}"
     if [ "$HAS_VENDOR_LIB" = false ] && [[ "$relative_file" == lib/* ]]; then
@@ -53,8 +47,8 @@ while IFS= read -r -d '' source_file; do
             ;;
     esac
 
-  # ADD_TO_WORK_DIR "$MODPATH" "system" "system/lib64/libnfc_prop_extn.so" 0 0 644 "u:object_r:system_file:s0"
-    ADD_TO_WORK_DIR "$MODPATH/system" "vendor" "$relative_file" 0 0 644 "u:object_r:vendor_file:s0" || return 1
+    ADD_TO_WORK_DIR "$MODPATH/system" "vendor" "$relative_file" 0 0 644 \
+        "u:object_r:vendor_file:s0" || return 1
 done < <(find "$DRIVER_PAYLOAD" \( -type f -o -type l \) -print0 | sort -z)
 
 COMPAT_OPENCL="$MODPATH/compat_opencl/libOCLc.$SOC_NUM.so"
@@ -123,12 +117,14 @@ if [ -f "$COMPAT_OPENCL" ]; then
     if [ "$SPHAL_PATCHED_TOTAL" -gt 0 ]; then
         mkdir -p "$WORK_DIR/vendor/lib64"
         cp -a "$COMPAT_OPENCL" "$WORK_DIR/vendor/lib64/libOCLc.so" || return 1
-        SET_METADATA "vendor" "lib64/libOCLc.so" 0 0 644 "u:object_r:same_process_hal_file:s0" || return 1
+        SET_METADATA "vendor" "lib64/libOCLc.so" 0 0 644 \
+            "u:object_r:same_process_hal_file:s0" || return 1
 
         PUBLIC_LIBRARIES="$WORK_DIR/vendor/etc/public.libraries.txt"
         if [ -f "$PUBLIC_LIBRARIES" ] && ! grep -q -F 'libOCLc.so' "$PUBLIC_LIBRARIES"; then
             printf '\nlibOCLc.so\n' >> "$PUBLIC_LIBRARIES"
-            SET_METADATA "vendor" "etc/public.libraries.txt" 0 0 644 "u:object_r:vendor_configs_file:s0" || return 1
+            SET_METADATA "vendor" "etc/public.libraries.txt" 0 0 644 \
+                "u:object_r:vendor_configs_file:s0" || return 1
         fi
         LOG "- Staged private $SOC_NAME OpenCL compatibility runtime"
     else
