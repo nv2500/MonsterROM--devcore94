@@ -11,3 +11,8 @@ DECODE_APK "system_ext" "priv-app/SystemUI/SystemUI.apk"
 LOG "- Applying \"Disable app compaction\" to /system/system/framework/services.jar"
 APPLY_PATCH "system" "system/framework/services.jar" \
     "$MODPATH/appcompactor/services.jar/0001-Disable-app-compaction.patch"
+
+
+LOG "- Fixing Chromium to /system/system/framework/framework.jar"
+APPLY_PATCH "system" "system/framework/framework.jar" \
+    "$MODPATH/chromium/framework.jar/0002-Fix-Chromium-sandboxed-process-fallback.patch"
