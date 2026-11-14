@@ -1,0 +1,3 @@
+on post-fs-data
+    mkdir /data/misc/surfaceflinger 0700 system system
+    mkdir /data/misc/surfaceflinger/skia_shaders 0700 system system

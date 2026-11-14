@@ -1,0 +1,8 @@
+on boot
+    start dumpprops
+
+service dumpprops /system/bin/sh -c "/system/bin/getprop > /data/local/tmp/getprop_boot.txt"
+    user root
+    group root
+    disabled
+    oneshot

@@ -1,0 +1,5 @@
+on early-init
+    setprop persist.sys.renderengine.retry 0
+
+on post-fs-data
+    setprop persist.sys.renderengine.retry 0

@@ -1,0 +1,9 @@
+service display_refresh_rate /system/bin/display_refresh_rate.sh
+    class late_start
+    user root
+    group root system
+    seclabel u:r:init:s0
+    disabled
+
+on property:sys.boot_completed=1
+    start display_refresh_rate

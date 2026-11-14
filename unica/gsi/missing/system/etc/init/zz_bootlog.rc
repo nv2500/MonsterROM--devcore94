@@ -1,0 +1,34 @@
+on post-fs-data
+    setprop sys.usb.controller 10e00000.usb
+    mkdir /data/local/tmp 0771 shell shell
+    write /data/local/tmp/zz_1_postfs.txt "post-fs-data"
+    start bootsync
+    start bootlogcat
+    start bootdmesg
+
+on early-boot
+    write /data/local/tmp/zz_2_earlyboot.txt "early-boot"
+
+on boot
+    write /data/local/tmp/zz_3_boot.txt "boot"
+
+on property:sys.boot_completed=1
+    write /data/local/tmp/zz_4_done.txt "boot_completed"
+
+service bootsync /system/bin/sh -c "while true; do /system/bin/sync; sleep 2; done"
+    user root
+    group root
+    disabled
+    oneshot
+
+service bootlogcat /system/bin/logcat -b all -v threadtime -f /data/local/tmp/boot_logcat.txt -r 20480 -n 4
+    user root
+    group root log
+    disabled
+    oneshot
+
+service bootdmesg /system/bin/sh -c "/system/bin/dmesg -w > /data/local/tmp/boot_dmesg.txt"
+    user root
+    group root
+    disabled
+    oneshot

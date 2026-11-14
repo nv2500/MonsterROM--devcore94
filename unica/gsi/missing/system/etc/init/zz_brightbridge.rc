@@ -1,0 +1,7 @@
+#service brightbridge /system/bin/sh /system/etc/brightbridge.sh
+#    user root
+#    group root
+#    disabled
+#
+#on property:sys.boot_completed=1
+#    start brightbridge

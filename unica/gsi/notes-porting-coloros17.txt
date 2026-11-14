@@ -1,0 +1,85 @@
+system/system
+
+build.prop
+```
+media.settings.xml=/vendor/etc/media_profiles_V1_0.xml
+
+# disable setup wizard
+ro.setupwizard.mode=DISABLED
+ro.setupwizard.wifi_required=false
+
+# Force ADB
+persist.sys.usb.config=adb,mtp
+ro.adb.secure=0
+ro.secure=0
+ro.debuggable=1
+```
+
+system/my_product
+
+build.prop
+```
+persist.sys.renderengine.retry=0
+```
+
+~/Documents/github/MonsterROM/out/fw/SM-S741B_EUX/system-r9s-coloros17/system/etc/init/
+~/Documents/github/MonsterROM/unica/gsi/missing/system/etc/init/
+
+cp ~/Documents/github/MonsterROM/out/fw/SM-S741B_EUX/system-r9s-coloros17/system/etc/init/zz_bootlog.rc ~/Documents/github/MonsterROM/unica/gsi/missing/system/etc/init
+
+--------------------------------------------
+# need to remove
+boot-UxPerformance.vdex	Only Right	Binary			09/12/2026 10:21 AM	framework
+UxPerformance.jar	Only Right	Binary			09/12/2026 10:21 AM	framework
+boot-UxPerformance.vdex.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework
+QPerformance.jar.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework
+QXPerformance.jar	Only Right	Binary			09/12/2026 10:21 AM	framework
+UxPerformance.jar.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework
+QXPerformance.jar.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework
+boot-QPerformance.vdex	Only Right	Binary			09/12/2026 10:21 AM	framework
+boot-QPerformance.vdex.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework
+QPerformance.jar	Only Right	Binary			09/12/2026 10:21 AM	framework
+boot-UxPerformance.oat	Only Right	Binary			09/12/2026 10:21 AM	framework/arm64
+boot-UxPerformance.vdex	Only Right	Binary			09/12/2026 10:21 AM	framework/arm64
+boot-UxPerformance.vdex.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/arm64
+boot-UxPerformance.art.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/arm64
+boot-UxPerformance.art	Only Right	Binary			09/12/2026 10:21 AM	framework/arm64
+boot-QPerformance.art.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/arm64
+boot-QPerformance.art	Only Right	Binary			09/12/2026 10:21 AM	framework/arm64
+boot-QPerformance.oat	Only Right	Binary			09/12/2026 10:21 AM	framework/arm64
+boot-QPerformance.vdex	Only Right	Binary			09/12/2026 10:21 AM	framework/arm64
+boot-QPerformance.oat.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/arm64
+boot-UxPerformance.oat.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/arm64
+boot-QPerformance.vdex.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/arm64
+boot-UxPerformance.oat	Only Right	Binary			09/12/2026 10:21 AM	framework/arm
+boot-UxPerformance.vdex	Only Right	Binary			09/12/2026 10:21 AM	framework/arm
+boot-UxPerformance.vdex.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/arm
+boot-UxPerformance.art.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/arm
+boot-UxPerformance.art	Only Right	Binary			09/12/2026 10:21 AM	framework/arm
+boot-QPerformance.art.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/arm
+boot-QPerformance.art	Only Right	Binary			09/12/2026 10:21 AM	framework/arm
+boot-QPerformance.oat	Only Right	Binary			09/12/2026 10:21 AM	framework/arm
+boot-QPerformance.vdex	Only Right	Binary			09/12/2026 10:21 AM	framework/arm
+boot-QPerformance.oat.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/arm
+boot-UxPerformance.oat.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/arm
+boot-QPerformance.vdex.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/arm
+boot-UxPerformance.oat	Only Right	Binary			09/12/2026 10:21 AM	framework/oplus/arm64
+boot-UxPerformance.vdex	Only Right	Binary			09/12/2026 10:21 AM	framework/oplus/arm64
+boot-UxPerformance.vdex.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/oplus/arm64
+boot-UxPerformance.art.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/oplus/arm64
+boot-UxPerformance.art	Only Right	Binary			09/12/2026 10:21 AM	framework/oplus/arm64
+boot-QPerformance.art.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/oplus/arm64
+boot-QPerformance.art	Only Right	Binary			09/12/2026 10:21 AM	framework/oplus/arm64
+boot-QPerformance.oat	Only Right	Binary			09/12/2026 10:21 AM	framework/oplus/arm64
+boot-QPerformance.vdex	Only Right	Binary			09/12/2026 10:21 AM	framework/oplus/arm64
+boot-QPerformance.oat.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/oplus/arm64
+boot-UxPerformance.oat.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/oplus/arm64
+boot-QPerformance.vdex.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framework/oplus/arm64
+
+##### need to add
+# system/etc/selinux/mapping/30.0.cil
+30.0.cil	Only Right	Text	+2215		09/12/2026 10:21 AM	mapping
+30.0.compat.cil	Only Right	Text	+36		09/12/2026 10:21 AM	mapping
+29.0.compat.cil	Only Right	Text	+32		09/12/2026 10:21 AM	mapping
+29.0.cil	Only Right	Text	+2007		09/12/2026 10:21 AM	mapping
+
