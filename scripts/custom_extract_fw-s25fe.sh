@@ -41,6 +41,8 @@ EXTRACT_OS_PARTITIONS()
 
         [ -f "$FW_DIR/${MODEL}_${CSC}/$f" ] || continue
 
+        UNSPARSE_IMAGE "$FW_DIR/${MODEL}_${CSC}/$f" || exit 1
+
         if ! sudo -n -v &> /dev/null; then
             LOG "\033[0;33m! Asking user for sudo password\033[0m"
             if ! sudo -v 2> /dev/null; then

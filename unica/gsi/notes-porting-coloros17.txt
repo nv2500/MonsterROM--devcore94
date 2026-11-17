@@ -1,3 +1,33 @@
+./scripts/internal/apply_modules.sh unica/gsi-mods/
+
+ColorOS 17 Global -> r9s CN build overlay
+
+- The normal r9s build applies unica/gsi modules when the Global source tree exists.
+- Overlay system, my_product, and my_region from the Global tree; retain CN-only files.
+- Use checksum-verified rsync with progress output for the overlay, then install the
+  prepared metadata directly to avoid a second full per-path metadata scan.
+- Keep the CN my_stock tree. Replacing it too would grow the estimated system image
+  from 8.32 GiB to 12.98 GiB, above the 10.64 GiB super partition group limit.
+- Keep the target's 29.0/30.0 SELinux mappings; the Global tree provides 31.0+.
+- Remove QPerformance, QXPerformance, and UxPerformance framework artifacts.
+- Keep ADB authentication enabled; the insecure ro.adb.secure=0, ro.secure=0, and
+  ro.debuggable=1 settings below are not applied by the conversion module.
+
+Experimental Global-base prototype (opt-in):
+- Run with `COLOROS17_GLOBAL_BASE=true ./scripts/make_rom.sh --force`.
+- Assumes `out/target/r9s/work_dir/system` already contains the Global system;
+  the patch edits that tree directly and does not replace or stage it.
+- Imports the CN 29.0/30.0 system SELinux mapping files from
+  `out/fw/SM-S741B_XXX/system` with `ADD_TO_WORK_DIR`; target system_ext mappings
+  and the r9s VINTF matrix are packaged under
+  `unica/gsi-prototypes/coloros17_global_base`.
+- `ADD_TO_WORK_DIR` generates the required fs_config and file_context entries.
+- Selects the project-wide EROFS setting for OS image generation and fstab
+  entries. The EROFS setting affects all built OS partition images, not just
+  system; partition fit and boot compatibility still need device testing.
+- This is a build experiment; successful image creation does not establish that it
+  boots or that all target-specific behavior is compatible.
+
 system/system
 
 build.prop
@@ -82,4 +112,3 @@ boot-QPerformance.vdex.fsv_meta	Only Right	Binary			09/12/2026 10:21 AM	framewor
 30.0.compat.cil	Only Right	Text	+36		09/12/2026 10:21 AM	mapping
 29.0.compat.cil	Only Right	Text	+32		09/12/2026 10:21 AM	mapping
 29.0.cil	Only Right	Text	+2007		09/12/2026 10:21 AM	mapping
-

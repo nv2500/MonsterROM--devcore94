@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app>
+<enable pkg="com.android.contacts" priority="6"/>
+<enable pkg="com.android.incallui" priority="6"/>
+<enable pkg="com.coloros.sceneservice" priority="6" memory="8,12,16,24,32"/>
+<del_disable pkg="com.finshell.fin" name="FinShellPay.apk" priority="6"/>
+<del_disable pkg="com.fintech.life" name="Fineasy.apk" priority="6"/>
+<enable pkg="com.oplus.accesscard" priority="6"/>
+<enable pkg="com.oplus.blacklistapp" priority="6"/>
+<enable pkg="com.oplus.calendar" priority="6"/>
+<enable pkg="com.oplus.doublewake.settings" priority="6"/>
+<enable pkg="com.oplus.phonenoareainquire" priority="6"/>
+<enable pkg="com.ted.number" priority="6"/>
+</app>

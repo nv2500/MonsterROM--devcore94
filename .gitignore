@@ -15,3 +15,8 @@ security/unica_platform.pk8
 
 # skip big file of Camera app
 unica/patches/camera/system/priv-app/SamsungCamera/SamsungCamera.apk
+
+unica/gsi-prototypes
+unica/gsi-mods
+unica/gsi/missing/system
+unica/gsi/zz_coloros17

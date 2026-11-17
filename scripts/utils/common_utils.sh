@@ -270,7 +270,7 @@ ADD_TO_WORK_DIR()
         else
             mkdir -p "$TARGET_FILE"
         fi
-        EVAL "cp -a -T \"$SOURCE_FILE\" \"$TARGET_FILE\"" || exit 1
+        EVAL "cp -a --remove-destination -T \"$SOURCE_FILE\" \"$TARGET_FILE\"" || exit 1
     fi
 
     local ENTRY="${TARGET_FILE//$WORK_DIR\//}"

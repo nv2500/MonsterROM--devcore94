@@ -30,6 +30,53 @@ ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/bin/display_refresh_rate.sh" 0 0 644
 ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/etc/init/display_refresh_rate.rc" 0 0 644 "u:object_r:system_file:s0"
 LOG_STEP_OUT
 
+
+# delete junk files
+DELETE_FROM_WORK_DIR "system" "my_product/media/theme/uxicons/hdpi/com.tencent.mm/微信扫一扫.png"
+DELETE_FROM_WORK_DIR "system" "my_product/media/theme/uxicons/hdpi/com.tencent.mm/我的二维码.png"
+DELETE_FROM_WORK_DIR "system" "my_product/media/theme/uxicons/hdpi/com.tencent.mm/收付款.png"
+
+
+SET_PROP "system" "media.settings.xml" "/vendor/etc/media_profiles_V1_0.xml"
+SET_PROP "system" "ro.debuggable" "1"
+SET_PROP "system" "persist.sys.renderengine.retry" "0"
+# SET_PROP "vendor" "ro.egl.blobcache.multifile" "true"
+
+# remove QPerformance files
+FRAMEWORK_DIR="$WORK_DIR/system/system/framework"
+REMOVED_COUNT=0
+while IFS= read -r -d '' FILE; do
+    DELETE_FROM_WORK_DIR "system" "${FILE#"$WORK_DIR/system/"}" || return 1
+    REMOVED_COUNT=$((REMOVED_COUNT + 1))
+done < <(find "$FRAMEWORK_DIR" -type f \
+    \( -name "QPerformance*" -o -name "QXPerformance*" -o -name "UxPerformance*" \) \
+    -print0)
+LOG "- Removed $REMOVED_COUNT incompatible Qualcomm framework files"
+
+unset FILE FRAMEWORK_DIR REMOVED_COUNT
+
+
+# missing app
+# ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/app/WebViewGoogle64CN/WebViewGoogle64CN.apk" 0 0 644 "u:object_r:system_file:s0"
+# DELETE_FROM_WORK_DIR "system" "system/app/WebViewGoogle64CN"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/app/OplusCamera/OplusCamera.apk" 0 0 644 "u:object_r:system_file:s0"
+# ADD_TO_WORK_DIR "$MOD_DIR" "my_manifest/etc/config/app_v2.xml" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/app/Browser/Browser.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/app/Calculator2/Calculator2.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/app/ChromePartnerProvider/ChromePartnerProvider.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/app/Clock/Clock.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/app/Music/Music.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/app/OppoCompass2/OppoCompass2.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/app/OppoWeather2/OppoWeather2.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/app/OppoWeatherService/OppoWeatherService.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/priv-app/Calendar/Calendar.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/priv-app/Contacts/Contacts.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/priv-app/GlobalSearch/GlobalSearch.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/priv-app/MyDevices/MyDevices.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/priv-app/OppoGallery2/OppoGallery2.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MOD_DIR" "system" "system/priv-app/VideoGallery/VideoGallery.apk" 0 0 644 "u:object_r:system_file:s0"
+
+
 # # below is not checking yet
 # if [[ "$TARGET_CODENAME" != "r9s" ]]; then
 #     LOG "- Skipping r9s GSI compatibility libraries on $TARGET_CODENAME"
