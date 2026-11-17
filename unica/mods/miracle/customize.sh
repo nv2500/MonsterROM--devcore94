@@ -4,6 +4,8 @@ source "$SRC_DIR/scripts/utils/smali_utils.sh"
 
 MODPATH="$SRC_DIR/unica/mods/miracle"
 
+ADD_TO_WORK_DIR "$MODPATH" "system" "system/app/Chrome64/Chrome64.apk" 0 0 644 "u:object_r:system_file:s0"
+
 if [ ! "$(GET_PROP "system" "ro.unica.codename")" ]; then
     # Match latest Samsung's flagship device codename
     ROM_CODENAME="$(basename "$MODPATH")"
