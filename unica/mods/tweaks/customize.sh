@@ -8,9 +8,9 @@ DECODE_APK "system_ext" "priv-app/SystemUI/SystemUI.apk"
 
 # Disable app compaction
 # Guard the patch as the source firmware might have this already disabled
-LOG "- Applying \"Disable app compaction\" to /system/system/framework/services.jar"
-APPLY_PATCH "system" "system/framework/services.jar" \
-    "$MODPATH/appcompactor/services.jar/0001-Disable-app-compaction.patch"
+# LOG "- Applying \"Disable app compaction\" to /system/system/framework/services.jar"
+# APPLY_PATCH "system" "system/framework/services.jar" \
+#     "$MODPATH/appcompactor/services.jar/0001-Disable-app-compaction.patch"
 
 
 LOG "- Fixing Chromium to /system/system/framework/framework.jar"

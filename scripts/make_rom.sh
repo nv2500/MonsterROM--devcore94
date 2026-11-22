@@ -116,7 +116,7 @@ trap 'PRINT_BUILD_OUTCOME' EXIT
 trap 'echo' INT
 
 # hardcoding for testing
-# BUILD_ROM=false
+BUILD_ROM=false
 
 if $BUILD_ROM; then
     [ -d "$APKTOOL_DIR" ] && rm -rf "$APKTOOL_DIR"
