@@ -31,7 +31,7 @@ system/priv-app/SecSettings/SecSettings.apk/smali_classes3/com/samsung/android/s
 system/priv-app/SecSettings/SecSettings.apk/smali_classes3/com/samsung/android/settings/nfc/NfcSettings.smali
 "
 for f in $FTP; do
-    sed -i 's/const-string v1, "1"/const-string v1, "27"/' "$APKTOOL_DIR/$f"
+    sed -i 's/const-string v1, "1"/const-string v1, "24"/' "$APKTOOL_DIR/$f"
 done
 
-SET_PROP "vendor" "ro.vendor.nfc.info.antpos" "27"
+SET_PROP "vendor" "ro.vendor.nfc.info.antpos" "24"

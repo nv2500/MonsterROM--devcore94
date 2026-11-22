@@ -15,12 +15,13 @@ FILE=""
 INPUT_FILE=""
 OUTPUT_PATH=""
 
-THREAD_COUNT=$(awk -v max="$(nproc)" '/MemTotal/ {
-  tc = int(($2 + 1048575) / 2097152);
-  print (tc < 1 ? 1 : (tc > max ? max : tc));
-}' /proc/meminfo)
+# THREAD_COUNT=$(awk -v max="$(nproc)" '/MemTotal/ {
+#   tc = int(($2 + 1048575) / 2097152);
+#   print (tc < 1 ? 1 : (tc > max ? max : tc));
+# }' /proc/meminfo)
 
-[ -n "$GITHUB_ACTIONS" ] && THREAD_COUNT=1
+# [ -n "$GITHUB_ACTIONS" ] && THREAD_COUNT=1
+THREAD_COUNT=1
 
 BUILD()
 {
