@@ -6,6 +6,8 @@ MODPATH="$SRC_DIR/unica/patches/camera"
 
 DELETE_FROM_WORK_DIR "system" "system/priv-app/SamsungCamera"
 ADD_TO_WORK_DIR "$MODPATH" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MODPATH" "system" "system/priv-app/SingleTakeService/SingleTakeService.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$MODPATH" "system" "system/cameradata/singletake/service-feature.xml" 0 0 644 "u:object_r:system_file:s0"
 
 
 # # [

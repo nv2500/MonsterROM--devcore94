@@ -1,0 +1,12 @@
+libDualCamBokehCapture.camera.samsung.so
+libLocalTM_wrapper.camera.samsung.so
+libOpenCL.so
+libeden_rt.so
+libofi_rt_framework_user_vendor.so
+libswldc_capture_core.camera.samsung.so
+libenn_user_lib.so
+libsecsuperresolution_wrapper_v1.camera.samsung.so
+libtetra_hybrid_mf_zoom.arcsoft.so
+libtetra_llzoom.arcsoft.so
+libtetra_super_shot.arcsoft.so
+libtrifusion.arcsoft.so
