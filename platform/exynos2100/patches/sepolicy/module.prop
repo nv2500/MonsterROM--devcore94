@@ -1,0 +1,4 @@
+id=sepolicy
+name=Exynos 2100 vendor policy mappings
+author=MonsterROM_NEXT
+description=Restores G996B policy mappings and device labels and updates the app-signing policy for Android 17.

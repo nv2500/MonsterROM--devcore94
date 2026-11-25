@@ -159,6 +159,12 @@ if $BUILD_ROM; then
         LOG_STEP_OUT
     fi
 
+    if [ -d "$SRC_DIR/unica/mods-r9s" ]; then
+        LOG_STEP_IN true "Applying ROM mods-r9s"
+        "$SRC_DIR/scripts/internal/apply_modules.sh" "$SRC_DIR/unica/mods-r9s" || exit 1
+        LOG_STEP_OUT
+    fi
+
     if [ -d "$APKTOOL_DIR" ]; then
         LOG_STEP_IN true "Building APKs/JARs"
 
